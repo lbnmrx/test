@@ -13,4 +13,4 @@ Ce dépôt contient un mini-site [Astro](https://astro.build), publié par Cloud
 - `package.json` : les outils nécessaires et les commandes (`dev`, `build`)
 - `astro.config.mjs` : les réglages d'Astro
 
-Réglages Cloudflare : commande de compilation `npm run build`, dossier publié `dist`.
+Réglages Cloudflare (projet Workers) : commande de compilation `npm run build` dans le tableau de bord ; le dossier publié (`dist`) est indiqué dans `wrangler.jsonc`.
