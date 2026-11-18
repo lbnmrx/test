@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- STRUCTURE de la page : ce qu'elle contient (titres, champ, bouton, liste). -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon planning d'essai</title>
+  <!-- On relie la feuille de style : l'APPARENCE est dans un autre fichier. -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Mon planning d'essai</h1>
+    <p class="intro">Une mini-application pour comprendre GitHub : trois fichiers texte qui deviennent une application dans le navigateur.</p>
+
+    <form id="formulaire">
+      <input id="tache" type="text" placeholder="Ex. : Rendre le banc d'essai" required>
+      <select id="jour">
+        <option>Lundi</option><option>Mardi</option><option>Mercredi</option>
+        <option>Jeudi</option><option>Vendredi</option>
+      </select>
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <ul id="liste"></ul>
+  </main>
+
+  <!-- On relie le script : le FONCTIONNEMENT est dans un troisième fichier. -->
+  <script src="script.js"></script>
+</body>
+</html>
