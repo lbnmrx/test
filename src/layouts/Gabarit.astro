@@ -1,0 +1,25 @@
+---
+// GABARIT : le cadre commun de chaque page (en-tête, styles, zone de contenu).
+// Chaque page lui donne son titre, et son contenu vient se placer dans <slot />.
+import Entete from "../components/Entete.astro";
+import "../styles/global.css";
+
+// Une page .astro passe le titre directement ; une page Markdown le passe
+// dans son en-tête (« frontmatter »).
+const titre = Astro.props.titre ?? Astro.props.frontmatter?.titre;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titre} · Mon carnet GitHub</title>
+  </head>
+  <body>
+    <Entete />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

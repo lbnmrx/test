@@ -1,0 +1,31 @@
+---
+// COMPOSANT : l'en-tête du site, écrit UNE seule fois.
+// Toutes les pages l'affichent ; si on le modifie ici, elles changent toutes.
+// La partie entre les deux lignes « --- » est préparée par Astro au moment
+// de la fabrication du site (elle n'est jamais envoyée au navigateur).
+const liens = [
+  { titre: "Accueil", adresse: "/" },
+  { titre: "Planning", adresse: "/planning/" },
+  { titre: "À propos", adresse: "/a-propos/" },
+];
+---
+
+<header>
+  <strong>Mon carnet GitHub</strong>
+  <nav>
+    {liens.map((lien) => <a href={lien.adresse}>{lien.titre}</a>)}
+  </nav>
+</header>
+
+<style>
+  /* Ce style ne s'applique qu'à ce composant. */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    background: #8cc757;
+  }
+  nav { display: flex; gap: 18px; }
+  a { color: #1d2318; text-decoration: none; font-weight: 600; }
+</style>

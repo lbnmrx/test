@@ -1,0 +1,18 @@
+// RÉGLAGES CLOUDFLARE (projet de type « Workers »).
+// Ce fichier dit à Cloudflare quoi publier une fois le site fabriqué par Astro.
+{
+  // Doit porter le même nom que le projet dans le tableau de bord Cloudflare.
+  "name": "test",
+  "compatibility_date": "2026-11-18",
+  // Fabrique le site avec Astro juste avant chaque publication, quel que soit
+  // le réglage du tableau de bord (production comme aperçus).
+  "build": { "command": "npm run build" },
+  "assets": {
+    // Le dossier fabriqué par « npm run build ».
+    "directory": "./dist",
+    // Adresse inconnue → page 404 plutôt qu'une erreur.
+    "not_found_handling": "404-page"
+  },
+  // Autorise les aperçus de branche (une adresse de test par pull request).
+  "previews": {}
+}
