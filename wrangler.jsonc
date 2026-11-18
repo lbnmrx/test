@@ -9,5 +9,7 @@
     "directory": "./dist",
     // Adresse inconnue → page 404 plutôt qu'une erreur.
     "not_found_handling": "404-page"
-  }
+  },
+  // Autorise les aperçus de branche (une adresse de test par pull request).
+  "previews": {}
 }
