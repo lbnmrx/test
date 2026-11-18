@@ -1,0 +1,18 @@
+/* APPARENCE commune à toutes les pages du site. */
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #f4f6f1;
+  color: #1d2318;
+  margin: 0;
+}
+
+main {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+a { color: #4e7f2a; }
+h1 { margin-bottom: 4px; }
+.intro { color: #5b6455; margin-top: 0; }
