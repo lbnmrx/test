@@ -40,7 +40,8 @@ export const outils = [
   {
     id: "convertisseur-webp",
     nom: "WebP",
-    etat: "bientot",
+    adresse: "/outils/convertisseur-webp/",
+    etat: "actif",
     couleur: ["#4db6ac", "#00695c"],
     icone: '<path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/>',
   },
