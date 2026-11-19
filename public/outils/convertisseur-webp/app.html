@@ -1,0 +1,355 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><!-- Ajout pour Mobele OS : suit le thème clair/sombre de l'OS, masque le titre quand l'outil est intégré. -->
+<script>
+(function(){
+  var r=document.documentElement;
+  function appliquer(t){ if(t==="dark"||t==="light"){ r.dataset.theme=t; } }
+  try{ appliquer(localStorage.getItem("os.theme")||"light"); }catch(e){}
+  window.addEventListener("storage",function(e){ if(e.key==="os.theme") appliquer(e.newValue); });
+})();
+</script>
+<style>.name .tag{color:#4e7f2a}:root[data-theme="dark"] .name .tag{color:#b5e08a}.drop svg{stroke:#5f9f2f}</style>
+</head><body>
+<title>Convertisseur WebP</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="jszip.min.js"></script>
+<style>
+/* Layout : une colonne outil — réglages, zone de dépôt, liste des fichiers convertis */
+:root {
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --ink: #16191f;
+  --muted: #5f6673;
+  --line: #dcdfe5;
+  --accent: #8cc757;
+  --accent-ink: #1d2a12;
+  --accent-soft: #eaf5df;
+  --ok: #1d7a4c;
+  --err: #b42318;
+  --font-body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111318; --surface: #1a1d24; --ink: #e9ebef; --muted: #9aa1ad; --line: #2c313b;
+    --accent: #8cc757; --accent-ink: #1d2a12; --accent-soft: #25331a; --ok: #5cc98f; --err: #ff8a7a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111318; --surface: #1a1d24; --ink: #e9ebef; --muted: #9aa1ad; --line: #2c313b;
+  --accent: #8cc757; --accent-ink: #1d2a12; --accent-soft: #25331a; --ok: #5cc98f; --err: #ff8a7a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 48px;
+}
+.wrap { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+header h1 { font-size: 1.65rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+header p { margin: 4px 0 0; color: var(--muted); }
+.label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+
+.settings { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 620px) { .settings { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label {
+  border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 2px; transition: border-color .15s, background .15s;
+}
+.seg label b { font-family: var(--font-data); font-size: 1.15rem; font-weight: 500; }
+.seg label span { font-size: 0.8rem; color: var(--muted); }
+.seg input:checked + label { border-color: var(--accent); background: var(--accent-soft); }
+.seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+.q-row { display: flex; align-items: center; gap: 12px; }
+.q-row input[type=range] { flex: 1; accent-color: var(--accent); min-width: 0; }
+.q-row output { font-family: var(--font-data); min-width: 3ch; text-align: right; font-variant-numeric: tabular-nums; }
+.check { display: flex; gap: 8px; align-items: center; font-size: 0.88rem; color: var(--muted); }
+.check input { accent-color: var(--accent); }
+
+.drop {
+  border: 2px dashed var(--line); border-radius: 12px; background: var(--surface);
+  padding: 36px 16px; text-align: center; cursor: pointer; transition: border-color .15s, background .15s;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.drop:hover, .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.drop svg { width: 38px; height: 38px; stroke: var(--accent); fill: none; stroke-width: 1.6; }
+.drop strong { font-size: 1.05rem; }
+.drop small { color: var(--muted); }
+
+.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.bar .summary { color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+button {
+  font: inherit; font-weight: 600; font-size: 0.9rem; border-radius: 8px; padding: 8px 14px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+}
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.list { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.row { display: grid; grid-template-columns: 56px minmax(0,1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.thumb { width: 56px; height: 56px; border-radius: 6px; object-fit: cover; background: var(--bg); }
+.meta { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name .tag { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; background: var(--accent-soft); color: var(--accent); padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 2px; }
+.data { font-family: var(--font-data); font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.data .gain { color: var(--ok); }
+.data .loss { color: var(--err); }
+.status-err { color: var(--err); font-size: 0.85rem; }
+.row-actions { display: flex; gap: 6px; }
+.row-actions button { padding: 6px 10px; font-size: 0.82rem; }
+.icon-btn { padding: 6px 9px !important; color: var(--muted); }
+@media (max-width: 520px) {
+  .row { grid-template-columns: 48px minmax(0,1fr); }
+  .thumb { width: 48px; height: 48px; }
+  .row-actions { grid-column: 2; }
+}
+.toast { min-height: 1.4em; font-size: 0.88rem; color: var(--muted); }
+.toast.err { color: var(--err); }
+.note { font-size: 0.82rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Convertisseur WebP</h1>
+    <p>JPG, JPEG ou PNG vers WebP, redimensionné à la largeur choisie. Tout se passe dans votre navigateur : aucun fichier n'est envoyé sur un serveur.</p>
+  </header>
+
+  <section class="settings" aria-label="Réglages">
+    <div class="panel">
+      <div class="label">Largeur de sortie</div>
+      <div class="seg" role="radiogroup">
+        <input type="radio" name="w" id="w1080" value="1080" checked>
+        <label for="w1080"><b>1080 px</b><span>Web, réseaux sociaux</span></label>
+        <input type="radio" name="w" id="w2000" value="2000">
+        <label for="w2000"><b>2000 px</b><span>Grand format, articles</span></label>
+      </div>
+      <label class="check"><input type="checkbox" id="noUpscale" checked> Ne pas agrandir les images plus étroites</label>
+    </div>
+    <div class="panel">
+      <div class="label">Qualité WebP</div>
+      <div class="q-row">
+        <input type="range" id="quality" min="50" max="100" step="1" value="85" aria-label="Qualité WebP">
+        <output id="qOut" for="quality">85</output>
+      </div>
+      <div class="note">85 est un bon compromis poids/qualité pour la photo. Changer un réglage reconvertit la liste.</div>
+    </div>
+  </section>
+
+  <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choisir des images à convertir">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+    <strong>Déposez vos images ici</strong>
+    <small>ou cliquez pour choisir · JPG, JPEG, PNG · plusieurs fichiers possibles</small>
+    <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,image/jpeg,image/png" multiple hidden>
+  </div>
+
+  <div class="bar">
+    <div class="summary" id="summary"></div>
+    <div class="btns">
+      <button id="clearBtn" type="button">Vider la liste</button>
+      <button id="zipBtn" class="primary" type="button">Tout télécharger (.zip)</button>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <div class="list" id="list"></div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const listEl = $("list"), drop = $("drop"), input = $("fileInput");
+  const items = []; // {id, file, name, sample, srcW, srcH, outW, outH, blob, url, thumb, error, busy}
+  let uid = 0;
+  // Mobele OS : téléchargement classique du navigateur
+  const downloads = {
+    save: async ({ filename, data }) => {
+      const url = URL.createObjectURL(data instanceof Blob ? data : new Blob([data]));
+      const a = document.createElement("a");
+      a.href = url; a.download = filename; document.body.append(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+    }
+  };
+
+  const fmtBytes = (n) => n < 1024 ? n + " o" : n < 1048576 ? (n / 1024).toFixed(0) + " Ko" : (n / 1048576).toFixed(2).replace(".", ",") + " Mo";
+  const width = () => +document.querySelector('input[name="w"]:checked').value;
+  const quality = () => +$("quality").value / 100;
+  const outName = (it) => it.name.replace(/\.(jpe?g|png)$/i, "") + "-" + width() + ".webp";
+
+  function toast(msg, err) { const t = $("toast"); t.textContent = msg || ""; t.className = "toast" + (err ? " err" : ""); }
+
+  async function decode(source) {
+    if (source instanceof HTMLCanvasElement) return source;
+    try { return await createImageBitmap(source, { imageOrientation: "from-image" }); }
+    catch { return await createImageBitmap(source); }
+  }
+
+  // Réduction par paliers (÷2) pour une meilleure netteté sur les gros écarts
+  function resize(src, sw, sh, tw, th) {
+    let cur = src, cw = sw, ch = sh;
+    while (cw / 2 >= tw) {
+      const c = document.createElement("canvas");
+      c.width = Math.round(cw / 2); c.height = Math.round(ch / 2);
+      const x = c.getContext("2d"); x.imageSmoothingEnabled = true; x.imageSmoothingQuality = "high";
+      x.drawImage(cur, 0, 0, c.width, c.height);
+      cur = c; cw = c.width; ch = c.height;
+    }
+    const out = document.createElement("canvas");
+    out.width = tw; out.height = th;
+    const ctx = out.getContext("2d"); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(cur, 0, 0, tw, th);
+    return out;
+  }
+
+  async function convert(it) {
+    it.busy = true; it.error = null; render();
+    try {
+      const bmp = await decode(it.source);
+      const sw = bmp.width, sh = bmp.height;
+      it.srcW = sw; it.srcH = sh;
+      let tw = width();
+      if ($("noUpscale").checked && sw < tw) tw = sw;
+      const th = Math.max(1, Math.round(sh * tw / sw));
+      const canvas = resize(bmp, sw, sh, tw, th);
+      const blob = await new Promise((res) => canvas.toBlob(res, "image/webp", quality()));
+      if (!blob || blob.type !== "image/webp") throw new Error("Ce navigateur ne sait pas encoder le WebP.");
+      if (it.url) URL.revokeObjectURL(it.url);
+      it.blob = blob; it.url = URL.createObjectURL(blob); it.outW = tw; it.outH = th;
+    } catch (e) {
+      it.error = e.message || "Image illisible.";
+    }
+    it.busy = false; render();
+  }
+
+  function addFiles(fileList) {
+    const files = [...fileList].filter((f) => /\.(jpe?g|png)$/i.test(f.name) || /^image\/(jpeg|png)$/.test(f.type));
+    const rejected = fileList.length - files.length;
+    removeSample();
+    files.forEach((f) => {
+      const it = { id: ++uid, source: f, name: f.name, size: f.size };
+      items.push(it); convert(it);
+    });
+    toast(rejected ? rejected + " fichier(s) ignoré(s) : seuls JPG, JPEG et PNG sont acceptés." : "", !!rejected);
+    render();
+  }
+
+  function removeSample() {
+    const i = items.findIndex((x) => x.sample);
+    if (i >= 0) { const [s] = items.splice(i, 1); if (s.url) URL.revokeObjectURL(s.url); }
+  }
+
+  async function save(filename, data) {
+    if (!downloads) { toast("Le téléchargement n'est pas disponible dans cette vue.", true); return; }
+    try { await downloads.save({ filename, data }); toast("Enregistré : " + filename); }
+    catch (e) {
+      if (e?.code === "declined") toast("Téléchargement annulé.");
+      else if (e?.code === "rate_limited") toast("Une demande d'enregistrement est déjà ouverte.", true);
+      else toast("Enregistrement impossible (" + (e?.code || "erreur") + ").", true);
+    }
+  }
+
+  async function saveZip() {
+    const ready = items.filter((x) => x.blob && !x.sample);
+    if (!ready.length) return;
+    if (ready.length === 1) return save(outName(ready[0]), ready[0].blob);
+    toast("Préparation de l'archive…");
+    const zip = new JSZip();
+    const used = new Set();
+    ready.forEach((it) => {
+      let n = outName(it), k = 2;
+      while (used.has(n)) n = outName(it).replace(/\.webp$/, "-" + k++ + ".webp");
+      used.add(n); zip.file(n, it.blob);
+    });
+    const blob = await zip.generateAsync({ type: "blob", compression: "STORE" });
+    save("images-webp-" + width() + ".zip", blob);
+  }
+
+  function render() {
+    listEl.innerHTML = "";
+    listEl.hidden = !items.length;
+    items.forEach((it) => {
+      const row = document.createElement("div"); row.className = "row";
+      const img = document.createElement("img"); img.className = "thumb"; img.alt = ""; if (it.url) img.src = it.url;
+      const meta = document.createElement("div"); meta.className = "meta";
+      const name = document.createElement("div"); name.className = "name"; name.textContent = it.blob ? outName(it) : it.name;
+      if (it.sample) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "Exemple"; name.append(t); }
+      const data = document.createElement("div"); data.className = "data";
+      if (it.busy) data.textContent = "Conversion…";
+      else if (it.error) { data.className = "status-err"; data.textContent = it.name + " — " + it.error; }
+      else if (it.blob) {
+        const pct = Math.round((1 - it.blob.size / it.size) * 100);
+        data.innerHTML = "";
+        data.append(`${it.srcW}×${it.srcH} → ${it.outW}×${it.outH} · ${fmtBytes(it.size)} → ${fmtBytes(it.blob.size)} `);
+        const g = document.createElement("span"); g.className = pct >= 0 ? "gain" : "loss";
+        g.textContent = (pct >= 0 ? "−" : "+") + Math.abs(pct) + " %"; data.append(g);
+      }
+      meta.append(name, data);
+      const act = document.createElement("div"); act.className = "row-actions";
+      if (it.blob && !it.sample && downloads) {
+        const b = document.createElement("button"); b.type = "button"; b.textContent = "Télécharger";
+        b.onclick = () => save(outName(it), it.blob); act.append(b);
+      }
+      const rm = document.createElement("button"); rm.type = "button"; rm.className = "icon-btn"; rm.textContent = "✕";
+      rm.setAttribute("aria-label", "Retirer " + it.name);
+      rm.onclick = () => { const i = items.indexOf(it); if (i >= 0) items.splice(i, 1); if (it.url) URL.revokeObjectURL(it.url); render(); };
+      act.append(rm);
+      row.append(img, meta, act); listEl.append(row);
+    });
+    const real = items.filter((x) => !x.sample);
+    const done = real.filter((x) => x.blob);
+    const before = done.reduce((s, x) => s + x.size, 0), after = done.reduce((s, x) => s + x.blob.size, 0);
+    $("summary").textContent = real.length
+      ? `${done.length}/${real.length} converti(s) · ${fmtBytes(before)} → ${fmtBytes(after)}`
+      : "Aucun fichier pour l'instant. La ligne « Exemple » montre le résultat attendu.";
+    $("zipBtn").disabled = !done.length || !downloads;
+    $("zipBtn").textContent = done.length === 1 ? "Télécharger" : "Tout télécharger (.zip)";
+    $("clearBtn").disabled = !items.length;
+  }
+
+  // Image d'exemple générée localement (3000 px de large), retirée au premier dépôt
+  function makeSample() {
+    const c = document.createElement("canvas"); c.width = 3000; c.height = 2000;
+    const x = c.getContext("2d");
+    const g = x.createLinearGradient(0, 0, 3000, 2000);
+    g.addColorStop(0, "#1f2b4d"); g.addColorStop(0.55, "#3c5a9a"); g.addColorStop(1, "#d9a35b");
+    x.fillStyle = g; x.fillRect(0, 0, 3000, 2000);
+    x.fillStyle = "rgba(255,255,255,.12)";
+    for (let i = 0; i < 9; i++) { x.beginPath(); x.arc(400 + i * 300, 1000 + Math.sin(i) * 400, 120 + i * 18, 0, Math.PI * 2); x.fill(); }
+    const it = { id: ++uid, source: c, name: "exemple-enceinte.jpg", size: 1840000, sample: true };
+    items.push(it); convert(it);
+  }
+
+  drop.addEventListener("click", () => input.click());
+  drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); } });
+  input.addEventListener("change", () => { addFiles(input.files); input.value = ""; });
+  ["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", (e) => addFiles(e.dataTransfer.files));
+  // Dépôt n'importe où sur la page
+  document.addEventListener("dragover", (e) => e.preventDefault());
+  document.addEventListener("drop", (e) => { if (!drop.contains(e.target)) { e.preventDefault(); addFiles(e.dataTransfer.files); } });
+
+  const reconvertAll = () => items.forEach(convert);
+  document.querySelectorAll('input[name="w"]').forEach((r) => r.addEventListener("change", reconvertAll));
+  $("noUpscale").addEventListener("change", reconvertAll);
+  let qt; $("quality").addEventListener("input", (e) => { $("qOut").textContent = e.target.value; clearTimeout(qt); qt = setTimeout(reconvertAll, 250); });
+  $("clearBtn").onclick = () => { items.forEach((x) => x.url && URL.revokeObjectURL(x.url)); items.length = 0; toast(""); render(); };
+  $("zipBtn").onclick = saveZip;
+
+  makeSample();
+  render();
+})();
+</script>
+
+</body></html>
