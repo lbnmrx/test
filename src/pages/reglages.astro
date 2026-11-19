@@ -1,0 +1,14 @@
+---
+// PAGE RÉGLAGES : organiser les apps de l'accueil (ordre, visibilité, raccourcis externes).
+// On y accède par la roue crantée en haut à droite.
+import Gabarit from "../layouts/Gabarit.astro";
+import Reglages from "../components/Reglages.jsx";
+---
+
+<Gabarit titre="Réglages">
+  <div class="max-w-2xl">
+    <h1 class="text-2xl font-bold mb-1">Réglages</h1>
+    <p class="intro mb-6">Les apps de l'accueil. Les réglages sont enregistrés chez Cloudflare et suivent sur tous vos appareils.</p>
+    <Reglages client:only="react" />
+  </div>
+</Gabarit>

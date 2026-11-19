@@ -1,16 +1,16 @@
 ---
-// PAGE D'ACCUEIL : le tableau de bord du jour, puis la grille des outils.
+// PAGE D'ACCUEIL : le tableau de bord du jour, puis la grille d'apps.
 // Le relevé des données (Trello, Sheet, Dougs) est lu au moment de la
 // fabrication du site, puis transmis au tableau de bord.
 // « client:only="react" » : le tableau de bord est un îlot interactif fabriqué
 // directement dans le navigateur (heure qui avance, météo en direct).
 import Gabarit from "../layouts/Gabarit.astro";
 import TableauDeBord from "../components/TableauDeBord.jsx";
-import GrilleOutils from "../components/GrilleOutils.astro";
+import GrilleApps from "../components/GrilleApps.jsx";
 import donnees from "../data/tableau.json";
 ---
 
 <Gabarit titre="Accueil">
   <TableauDeBord client:only="react" donnees={donnees} />
-  <GrilleOutils />
+  <GrilleApps client:only="react" />
 </Gabarit>

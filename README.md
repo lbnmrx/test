@@ -10,8 +10,10 @@ Ce dépôt contient mon OS personnel : un site [Astro](https://astro.build) au t
 - `src/pages/outils/` : une page par outil
 - `src/data/tableau.json` : le relevé du tableau de bord (Trello, Sheet « Suivi articles », Dougs), mis à jour par une tâche Claude planifiée
 - `scripts/releve-missions.mjs` : calcule le CA du mois et les missions à facturer à partir du Sheet « Suivi articles » (mêmes règles que l'outil Suivi articles)
-- `src/data/outils.js` : la liste des outils affichés sur l'accueil (ajouter un outil = une ligne ici)
-- `src/components/` : les pièces réutilisables (barre du haut, tableau de bord, grille d'outils)
+- `src/data/outils.js` : le catalogue des apps intégrées (ajouter un outil = une entrée ici)
+- `src/pages/reglages.astro` : la page Réglages (ordre, visibilité, raccourcis externes)
+- `worker/index.js` : le petit serveur qui enregistre les réglages des apps dans le stockage KV de Cloudflare (adresse /api/apps)
+- `src/components/` : les pièces réutilisables (barre du haut, tableau de bord, grille d'apps)
 - `src/layouts/Gabarit.astro` : le cadre commun à toutes les pages
 - `src/styles/global.css` : le thème (HeroUI + couleur principale)
 - `public/` : les fichiers publiés tels quels (favicon, application Rack Designer)
