@@ -1,8 +1,4 @@
-# Mon carnet d'apprentissage GitHub
-Premier essai.
-Deuxième essai corrigé sur une branche.
-
-## Mobele OS
+# Mobele OS
 
 Ce dépôt contient mon OS personnel : un site [Astro](https://astro.build) au thème HeroUI (vert #8cc757, clair/sombre), publié par Cloudflare à chaque fusion dans `main`.
 
