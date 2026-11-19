@@ -2,15 +2,17 @@
 Premier essai.
 Deuxième essai corrigé sur une branche.
 
-## Le site
+## Mon OS
 
-Ce dépôt contient un mini-site [Astro](https://astro.build), publié par Cloudflare à chaque fusion dans `main`.
+Ce dépôt contient mon OS personnel : un site [Astro](https://astro.build) au thème HeroUI (vert #8cc757, clair/sombre), publié par Cloudflare à chaque fusion dans `main`.
 
-- `src/pages/` : chaque fichier devient une page du site
-- `src/components/` : les pièces réutilisables (en-tête, planning)
-- `src/layouts/` : le gabarit commun à toutes les pages
-- `src/styles/` : l'apparence commune
+- `src/pages/index.astro` : l'accueil (tableau de bord du jour + grille des outils)
+- `src/pages/outils/` : une page par outil
+- `src/data/outils.js` : la liste des outils affichés sur l'accueil (ajouter un outil = une ligne ici)
+- `src/components/` : les pièces réutilisables (barre du haut, tableau de bord, grille d'outils)
+- `src/layouts/Gabarit.astro` : le cadre commun à toutes les pages
+- `src/styles/global.css` : le thème (HeroUI + couleur principale)
+- `public/` : les fichiers publiés tels quels (favicon, application Rack Designer)
 - `package.json` : les outils nécessaires et les commandes (`dev`, `build`)
-- `astro.config.mjs` : les réglages d'Astro
-
-Réglages Cloudflare (projet Workers) : commande de compilation `npm run build` dans le tableau de bord ; le dossier publié (`dist`) est indiqué dans `wrangler.jsonc`.
+- `astro.config.mjs` : les réglages d'Astro (React, Tailwind)
+- `wrangler.jsonc` : les réglages Cloudflare (dossier publié, aperçus de branche)

@@ -8,6 +8,13 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^7.4.13"
+    "@astrojs/react": "^7.1.9",
+    "@heroui/react": "^3.2.7",
+    "@heroui/styles": "^3.2.7",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.5"
   }
 }
