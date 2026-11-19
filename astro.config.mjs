@@ -1,6 +1,12 @@
 // RÉGLAGES D'ASTRO.
-// Ici, presque rien : Astro fabrique un site statique (des fichiers HTML/CSS/JS
-// ordinaires) dans le dossier dist/, que Cloudflare publie ensuite.
+// - react() : permet d'utiliser des composants React (ceux de HeroUI) dans les pages.
+// - tailwindcss() : fabrique les styles Tailwind dont HeroUI a besoin.
+// Le site reste statique : Astro produit des fichiers HTML/CSS/JS dans dist/.
 import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig({});
+export default defineConfig({
+  integrations: [react()],
+  vite: { plugins: [tailwindcss()] },
+});

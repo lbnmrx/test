@@ -1,18 +1,28 @@
-/* APPARENCE commune à toutes les pages du site. */
+/* THÈME DE L'OS : HeroUI (sur Tailwind), aux couleurs d'Alban.
+   L'ordre compte : Tailwind d'abord, puis HeroUI. */
+@import "tailwindcss";
+@import "@heroui/styles";
 
-body {
-  font-family: system-ui, sans-serif;
-  background: #f4f6f1;
-  color: #1d2318;
-  margin: 0;
+/* Couleur principale : vert #8cc757, avec un texte foncé dessus (lisible). */
+:root, [data-theme="light"], .light {
+  --accent: #8cc757;
+  --accent-foreground: oklch(0.22 0.05 132);
+  --accent-soft-foreground: oklch(0.45 0.12 132);
+}
+.dark, [data-theme="dark"] {
+  --accent: #8cc757;
+  --accent-foreground: oklch(0.22 0.05 132);
+  --accent-soft-foreground: oklch(0.82 0.13 132);
 }
 
-main {
-  max-width: 640px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
+/* Petit texte d'introduction sous les titres. */
+.intro { color: var(--muted); margin-top: 0; }
 
-a { color: #4e7f2a; }
-h1 { margin-bottom: 4px; }
-.intro { color: #5b6455; margin-top: 0; }
+/* Mise en forme des pages de texte (Markdown) : Tailwind remet tout à zéro,
+   on redonne donc des marges et des tailles aux titres, paragraphes et listes. */
+.texte h1 { font-size: 1.9rem; font-weight: 700; margin: 0 0 1rem; }
+.texte h2 { font-size: 1.3rem; font-weight: 650; margin: 2rem 0 0.75rem; }
+.texte p { margin: 0 0 1rem; line-height: 1.65; }
+.texte ul { list-style: disc; padding-left: 1.4rem; margin: 0 0 1rem; }
+.texte li { margin-bottom: 0.35rem; line-height: 1.6; }
+.texte code { font-size: 0.9em; padding: 0.1em 0.35em; border-radius: 6px; background: var(--surface-secondary, var(--surface)); }

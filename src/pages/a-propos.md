@@ -1,6 +1,7 @@
 ---
 layout: ../layouts/Gabarit.astro
 titre: À propos
+texte: true
 ---
 
 # À propos

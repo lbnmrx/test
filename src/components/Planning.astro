@@ -5,11 +5,11 @@ const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 ---
 
 <form id="formulaire">
-  <input id="tache" type="text" placeholder="Ex. : Rendre le banc d'essai" required />
-  <select id="jour">
+  <input id="tache" class="input" type="text" placeholder="Ex. : Rendre le banc d'essai" required />
+  <select id="jour" class="input">
     {jours.map((jour) => <option>{jour}</option>)}
   </select>
-  <button type="submit">Ajouter</button>
+  <button type="submit" class="button button--primary">Ajouter</button>
 </form>
 
 <ul id="liste"></ul>
@@ -24,6 +24,7 @@ const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
   formulaire.addEventListener("submit", (evenement) => {
     evenement.preventDefault();
     const ligne = document.createElement("li");
+    ligne.className = "card card--default";
     ligne.innerHTML = "<span></span><span class='jour'></span>";
     ligne.children[0].textContent = champTache.value;
     ligne.children[1].textContent = choixJour.value;
@@ -33,18 +34,13 @@ const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
 </script>
 
 <style>
+  /* Les champs, le bouton et les lignes reprennent les classes du thème HeroUI ;
+     il ne reste ici que la disposition. */
   form { display: flex; gap: 8px; margin: 24px 0; }
-  input, select, button {
-    font: inherit; padding: 10px 12px; border-radius: 10px; border: 1px solid #cfd6c8;
-  }
-  input { flex: 1; }
-  button { background: #8cc757; border-color: #8cc757; color: #1d2318; font-weight: 600; cursor: pointer; }
-  ul { list-style: none; padding: 0; }
-  /* :global() car les lignes <li> sont créées après coup par le script. */
+  #tache { flex: 1; }
   ul :global(li) {
-    display: flex; justify-content: space-between; align-items: center;
-    background: #fff; border: 1px solid #e2e7dc; border-radius: 10px;
+    flex-direction: row; justify-content: space-between; align-items: center;
     padding: 12px 14px; margin-bottom: 8px;
   }
-  ul :global(.jour) { font-size: 0.85em; color: #5b6455; }
+  ul :global(.jour) { font-size: 0.85em; color: var(--muted); }
 </style>

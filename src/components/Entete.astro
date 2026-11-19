@@ -1,31 +1,43 @@
 ---
-// COMPOSANT : l'en-tête du site, écrit UNE seule fois.
-// Toutes les pages l'affichent ; si on le modifie ici, elles changent toutes.
-// La partie entre les deux lignes « --- » est préparée par Astro au moment
-// de la fabrication du site (elle n'est jamais envoyée au navigateur).
-const liens = [
-  { titre: "Accueil", adresse: "/" },
-  { titre: "Planning", adresse: "/planning/" },
-  { titre: "À propos", adresse: "/a-propos/" },
-];
+// COMPOSANT : la barre du haut, commune à toutes les pages.
+// À gauche, le logo qui ramène à l'accueil ; à droite, la bascule clair/sombre.
 ---
 
-<header>
-  <strong>Mon carnet GitHub</strong>
-  <nav>
-    {liens.map((lien) => <a href={lien.adresse}>{lien.titre}</a>)}
-  </nav>
+<header class="sticky top-0 z-10 border-b border-[var(--separator)] bg-background/85 backdrop-blur">
+  <div class="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5 font-semibold no-underline text-foreground">
+      <span class="grid place-items-center size-8 rounded-lg bg-accent text-accent-foreground text-sm font-bold">OS</span>
+      Mon OS
+    </a>
+    <div class="flex items-center gap-1">
+    <a href="/a-propos/" class="text-sm text-muted no-underline px-2 hover:text-foreground">À propos</a>
+    <button id="bascule-theme" class="button button--ghost button--icon-only" aria-label="Mode clair / sombre" title="Mode clair / sombre">
+      <!-- Lune (affichée en mode clair) -->
+      <svg class="icone-lune" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <!-- Soleil (affiché en mode sombre) -->
+      <svg class="icone-soleil" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    </div>
+  </div>
 </header>
 
 <style>
-  /* Ce style ne s'applique qu'à ce composant. */
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 24px;
-    background: #8cc757;
-  }
-  nav { display: flex; gap: 18px; }
-  a { color: #1d2318; text-decoration: none; font-weight: 600; }
+  .icone-soleil { display: none; }
+  :global(.dark) .icone-soleil { display: block; }
+  :global(.dark) .icone-lune { display: none; }
 </style>
+
+<script>
+  // Bascule clair/sombre. Le choix est mémorisé sous « os.theme », et recopié
+  // sous « rackdesigner.theme » pour que le Rack Designer suive le même thème.
+  document.getElementById("bascule-theme")?.addEventListener("click", () => {
+    const racine = document.documentElement;
+    const nouveau = racine.dataset.theme === "dark" ? "light" : "dark";
+    racine.className = nouveau;
+    racine.dataset.theme = nouveau;
+    try {
+      localStorage.setItem("os.theme", nouveau);
+      localStorage.setItem("rackdesigner.theme", nouveau);
+    } catch {}
+  });
+</script>

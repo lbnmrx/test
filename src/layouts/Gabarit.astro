@@ -1,25 +1,38 @@
 ---
-// GABARIT : le cadre commun de chaque page (en-tête, styles, zone de contenu).
-// Chaque page lui donne son titre, et son contenu vient se placer dans <slot />.
+// GABARIT : le cadre commun de chaque page de l'OS.
+// Propriétés :
+//  - titre : le titre de la page (onglet du navigateur)
+//  - plein : true pour un outil qui occupe tout l'écran (ex. Rack Designer)
+//  - texte : true pour une page de texte (Markdown) mise en forme
 import Entete from "../components/Entete.astro";
 import "../styles/global.css";
 
-// Une page .astro passe le titre directement ; une page Markdown le passe
-// dans son en-tête (« frontmatter »).
-const titre = Astro.props.titre ?? Astro.props.frontmatter?.titre;
+const props = { ...Astro.props.frontmatter, ...Astro.props };
+const { titre, plein = false, texte = false } = props;
 ---
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titre} · Mon carnet GitHub</title>
+    <title>{titre} · Mon OS</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Applique le thème mémorisé AVANT l'affichage, pour éviter un flash blanc. -->
+    <script is:inline>
+      try {
+        const t = localStorage.getItem("os.theme") === "dark" ? "dark" : "light";
+        document.documentElement.className = t;
+        document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
   </head>
-  <body>
+  <body class="bg-background text-foreground min-h-screen flex flex-col">
     <Entete />
-    <main>
-      <slot />
-    </main>
+    {plein ? (
+      <main class="flex-1 flex flex-col"><slot /></main>
+    ) : (
+      <main class:list={["w-full max-w-6xl mx-auto px-5 py-8", { texte }]}><slot /></main>
+    )}
   </body>
 </html>
