@@ -26,3 +26,10 @@
 .texte ul { list-style: disc; padding-left: 1.4rem; margin: 0 0 1rem; }
 .texte li { margin-bottom: 0.35rem; line-height: 1.6; }
 .texte code { font-size: 0.9em; padding: 0.1em 0.35em; border-radius: 6px; background: var(--surface-secondary, var(--surface)); }
+
+/* Teintes des nuages de la météo, en clair et en sombre. */
+:root { --nuage: #d9dde3; --nuage-fonce: #b4bac4; }
+.dark { --nuage: #c9ced6; --nuage-fonce: #8d939d; }
+
+/* Lignes de cartes Trello : léger survol. */
+.ligne-trello:hover { background: var(--surface-secondary); }
