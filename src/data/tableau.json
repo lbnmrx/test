@@ -1,16 +1,40 @@
 {
-  "majLe": "2026-11-19T13:45:00+01:00",
+  "majLe": "2026-11-19T14:00:00+01:00",
   "trello": [
-    { "titre": "📄 ONmag - mise en ligne Edifier", "tableau": "PLANNING GLOBAL", "url": "https://trello.com/c/YJmaWgQX", "echeance": "2026-11-19T11:00:00.000Z", "enRetard": false },
-    { "titre": "Jérémy - étude AV nouvelle maison", "tableau": "PLANNING GLOBAL", "url": "https://trello.com/c/YUaqvvK2", "echeance": "2026-11-19T11:00:00.000Z", "enRetard": false },
-    { "titre": "Sonoro Atron", "tableau": "3.ON-mag", "url": "https://trello.com/c/qOnNyUGC", "echeance": "2026-11-19T11:00:00.000Z", "enRetard": false },
-    { "titre": "📸 Qobuz - Palma, Serblin, Meze, Sennheiser, Ruark", "tableau": "PLANNING GLOBAL", "url": "https://trello.com/c/F44J8vU4", "echeance": "2026-11-19T11:00:00.000Z", "enRetard": false }
+    {
+      "titre": "📄 ONmag - mise en ligne Edifier",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/YJmaWgQX",
+      "echeance": "2026-11-19T11:00:00.000Z",
+      "enRetard": false
+    },
+    {
+      "titre": "Jérémy - étude AV nouvelle maison",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/YUaqvvK2",
+      "echeance": "2026-11-19T11:00:00.000Z",
+      "enRetard": false
+    },
+    {
+      "titre": "Sonoro Atron",
+      "tableau": "3.ON-mag",
+      "url": "https://trello.com/c/qOnNyUGC",
+      "echeance": "2026-11-19T11:00:00.000Z",
+      "enRetard": false
+    },
+    {
+      "titre": "📸 Qobuz - Palma, Serblin, Meze, Sennheiser, Ruark",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/F44J8vU4",
+      "echeance": "2026-11-19T11:00:00.000Z",
+      "enRetard": false
+    }
   ],
   "missions": {
     "mois": "2026-11",
-    "caHT": 5655,
+    "caHT": 8065,
     "objectifHT": 5576.67,
-    "aFacturer": 12,
+    "aFacturer": 29,
     "lien": "https://docs.google.com/spreadsheets/d/1blrkr3lkRC1BS5bSXQitKFy-ET_sKB6nFdo1UF60qOo/edit"
   },
   "tresorerie": {
