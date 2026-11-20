@@ -1,13 +1,6 @@
 {
-  "majLe": "2026-11-20T06:49:04+01:00",
+  "majLe": "2026-11-20T12:49:37+01:00",
   "trello": [
-    {
-      "titre": "Réécriture Qobuz sur TV",
-      "tableau": "5.Qobuz",
-      "url": "https://trello.com/c/1YyvkEau",
-      "echeance": "2026-11-19T08:00:00.000Z",
-      "enRetard": true
-    },
     {
       "titre": "Jérémy - étude AV nouvelle maison",
       "tableau": "PLANNING GLOBAL",
@@ -42,13 +35,6 @@
       "url": "https://trello.com/c/5WWlVBJ5",
       "echeance": "2026-11-20T11:00:00.000Z",
       "enRetard": false
-    },
-    {
-      "titre": "RDV - RFI Labo & Xavier, Richard",
-      "tableau": "PLANNING GLOBAL",
-      "url": "https://trello.com/c/ZSQxe1dS",
-      "echeance": "2026-11-20T11:00:00.000Z",
-      "enRetard": false
     }
   ],
   "missions": {
@@ -60,8 +46,8 @@
   },
   "tresorerie": {
     "compte": "Crédit Agricole Centre France",
-    "solde": 5479.26,
-    "operationsAValider": 0,
+    "solde": 5404.08,
+    "operationsAValider": 2,
     "lien": "https://app.dougs.fr"
   }
 }
