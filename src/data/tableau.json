@@ -1,32 +1,53 @@
 {
-  "majLe": "2026-11-19T14:00:00+01:00",
+  "majLe": "2026-11-20T06:49:04+01:00",
   "trello": [
     {
-      "titre": "📄 ONmag - mise en ligne Edifier",
-      "tableau": "PLANNING GLOBAL",
-      "url": "https://trello.com/c/YJmaWgQX",
-      "echeance": "2026-11-19T11:00:00.000Z",
-      "enRetard": false
+      "titre": "Réécriture Qobuz sur TV",
+      "tableau": "5.Qobuz",
+      "url": "https://trello.com/c/1YyvkEau",
+      "echeance": "2026-11-19T08:00:00.000Z",
+      "enRetard": true
     },
     {
       "titre": "Jérémy - étude AV nouvelle maison",
       "tableau": "PLANNING GLOBAL",
       "url": "https://trello.com/c/YUaqvvK2",
       "echeance": "2026-11-19T11:00:00.000Z",
-      "enRetard": false
+      "enRetard": true
     },
     {
-      "titre": "Sonoro Atron",
-      "tableau": "3.ON-mag",
-      "url": "https://trello.com/c/qOnNyUGC",
-      "echeance": "2026-11-19T11:00:00.000Z",
-      "enRetard": false
-    },
-    {
-      "titre": "📸 Qobuz - Palma, Serblin, Meze, Sennheiser, Ruark",
+      "titre": "📸 Qobuz - Palma, Serblin, Meze",
       "tableau": "PLANNING GLOBAL",
       "url": "https://trello.com/c/F44J8vU4",
-      "echeance": "2026-11-19T11:00:00.000Z",
+      "echeance": "2026-11-20T11:00:00.000Z",
+      "enRetard": false
+    },
+    {
+      "titre": "🔊 Qobuz - test Meze Arta",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/5s2THxnw",
+      "echeance": "2026-11-20T11:00:00.000Z",
+      "enRetard": false
+    },
+    {
+      "titre": "📄 HiFi Group - réécriture test Arcam AVA35",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/MlwOpEyM",
+      "echeance": "2026-11-20T11:00:00.000Z",
+      "enRetard": false
+    },
+    {
+      "titre": "📄 HCFR - réécriture test Yamaha",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/5WWlVBJ5",
+      "echeance": "2026-11-20T11:00:00.000Z",
+      "enRetard": false
+    },
+    {
+      "titre": "RDV - RFI Labo & Xavier, Richard",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/ZSQxe1dS",
+      "echeance": "2026-11-20T11:00:00.000Z",
       "enRetard": false
     }
   ],
