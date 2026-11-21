@@ -1,5 +1,5 @@
 {
-  "majLe": "2026-11-20T12:49:37+01:00",
+  "majLe": "2026-11-21T06:48:57+01:00",
   "trello": [
     {
       "titre": "Jérémy - étude AV nouvelle maison",
@@ -9,45 +9,38 @@
       "enRetard": true
     },
     {
-      "titre": "📸 Qobuz - Palma, Serblin, Meze",
-      "tableau": "PLANNING GLOBAL",
-      "url": "https://trello.com/c/F44J8vU4",
-      "echeance": "2026-11-20T11:00:00.000Z",
-      "enRetard": false
-    },
-    {
       "titre": "🔊 Qobuz - test Meze Arta",
       "tableau": "PLANNING GLOBAL",
       "url": "https://trello.com/c/5s2THxnw",
       "echeance": "2026-11-20T11:00:00.000Z",
-      "enRetard": false
-    },
-    {
-      "titre": "📄 HiFi Group - réécriture test Arcam AVA35",
-      "tableau": "PLANNING GLOBAL",
-      "url": "https://trello.com/c/MlwOpEyM",
-      "echeance": "2026-11-20T11:00:00.000Z",
-      "enRetard": false
+      "enRetard": true
     },
     {
       "titre": "📄 HCFR - réécriture test Yamaha",
       "tableau": "PLANNING GLOBAL",
       "url": "https://trello.com/c/5WWlVBJ5",
       "echeance": "2026-11-20T11:00:00.000Z",
-      "enRetard": false
+      "enRetard": true
+    },
+    {
+      "titre": "📄 HiFi Group - réécriture test Arcam AVA35",
+      "tableau": "PLANNING GLOBAL",
+      "url": "https://trello.com/c/MlwOpEyM",
+      "echeance": "2026-11-20T11:00:00.000Z",
+      "enRetard": true
     }
   ],
   "missions": {
     "mois": "2026-11",
-    "caHT": 8065,
+    "caHT": 8545,
     "objectifHT": 5576.67,
-    "aFacturer": 29,
+    "aFacturer": 30,
     "lien": "https://docs.google.com/spreadsheets/d/1blrkr3lkRC1BS5bSXQitKFy-ET_sKB6nFdo1UF60qOo/edit"
   },
   "tresorerie": {
     "compte": "Crédit Agricole Centre France",
     "solde": 5404.08,
-    "operationsAValider": 2,
+    "operationsAValider": 0,
     "lien": "https://app.dougs.fr"
   }
 }
